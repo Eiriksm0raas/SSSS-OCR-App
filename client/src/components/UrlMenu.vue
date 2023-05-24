@@ -28,10 +28,8 @@ export default {
                 this.result = '';
                 let r = await getImageConverted(this.imgSrc);
                 console.log(r);
-                for(const word of r) {
-                    this.result += Object.keys(word)[0] + ' ';
-                }
-
+                this.result = r.replace(/\\n/g, "<br>");
+                
                 if(this.result != '') this.showResult = true;
             }
         },
@@ -51,7 +49,7 @@ export default {
     <Alert v-if="showResult" @cancel-event="() => showResult = false">
         <div class="d-flex flex-column p-3">
             <h3>Result</h3>
-            <p>{{ this.result }}</p>
+            <p v-html="this.result"></p>
         </div>
     </Alert>
     <BaseMenu 

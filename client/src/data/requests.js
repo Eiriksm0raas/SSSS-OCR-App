@@ -4,5 +4,5 @@ export async function getImageConverted(imgUrl) {
     return await fetch(BASE_ADDRESS + "/read/?" + new URLSearchParams({
         img_url: imgUrl
     }))
-    .then(response => response.json());
+    .then(response => response.text());
 }

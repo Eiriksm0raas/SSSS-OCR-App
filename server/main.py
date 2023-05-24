@@ -31,7 +31,7 @@ async def root():
 
 @app.get("/api/read/")
 async def convertImgFromUrl(img_url: str):
-    return json.loads(converter.predict(img_url))
+    return converter.predict(img_url)
 
 @app.post("/api/upload/")
 async def convertImgFromUpload(file: UploadFile):
