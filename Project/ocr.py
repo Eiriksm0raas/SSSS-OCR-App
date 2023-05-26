@@ -4,7 +4,7 @@ import pytesseract
 import urllib.request
 import numpy as np
 import time
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+pytesseract.pytesseract.tesseract_cmd = r'C:\Users\halvo\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
 
 
 class OCRConverter(object):
@@ -22,6 +22,10 @@ class OCRConverter(object):
         text = self.ocr(preprocessed_image)
         print(text)
         return text
+
+    def crop_image(self, image):
+        cropped_image = image[50:450, 100:500]
+        return cropped_image
 
     def preprocess_image(self, image):
         # Crop the image by specifying the desired dimensions

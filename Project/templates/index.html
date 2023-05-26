@@ -3,13 +3,32 @@
 <head>
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-    <title>Document scanner</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Document Scanner</title>
 </head>
-<body>
-    <header>
-        <h1>SSS3000 Project</h1>
-        <h2>Document scanner</h2>
+<body class="bg-secondary">
+    <header class="text-center mb-4 bg-dark text-white">
+        <h1>SSS3000</h1>
+        <h2>Document Scanner</h2>
     </header>
+    <main class="row">
+        <section class="col-6 d-flex flex-column">
+            <!-- Upload image -->
+            <h3 class="text-center">UPLOAD PICTURE</h3>
+            <div id="dropzone" class="dropzone mx-auto" ondrop="handleDrop(event)" ondragover="handleDragOver(event)">
+                <p class="align-items-center">Drag and drop an image here</p>
+            </div>
+            <input type="file" id="fileInput" style="display:none;">
+            <button id="upload-picture-button" class="btn btn-info mt-3 mx-auto" style="width: 25vmin;">Upload picture</button>
+        </section>
 
+        <section class="col-6 border-2 border-start border-dark line d-flex flex-column">
+            <!-- Take picture -->
+            <h3 class="text-center">TAKE PICTURE FROM PI</h3>
+            <img id="pi-image" style="width: 60vmin; height: 60vmin;" class="mx-auto">
+            <button id="take-picture-button" class="btn btn-info mt-3 mx-auto" style="width: 25vmin;">Take picture</button>
+        </section>
+    </main>
+    <script src="/static/js/main.js"></script>
 </body>
 </html>
