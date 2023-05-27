@@ -48,8 +48,8 @@ class OCRConverter(object):
         #config = "--psm 6 --oem 2 -c language_model_penalty_non_freq_dict_word=1 -c language_model_penalty_non_dict_word=1 tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,!?øåæØÅÆ "
         #config = "--psm 6 -c language_model_penalty_non_freq_dict_word=1 -c language_model_penalty_non_dict_word=1"
 
-
         text = pytesseract.image_to_string(image, lang="eng+nor", config=config)
+        print(text)
         return text
     
     def ocr2(self, image):

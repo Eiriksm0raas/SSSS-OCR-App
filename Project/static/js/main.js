@@ -30,7 +30,7 @@ async function processImage() {
         const input = document.getElementById("fileInput");
         //const file = input.files[0];
         const text = await uploadPicture(file);
-        console.log(await text);
+        console.log(text);
     } catch(ex) {
         console.log(ex);
     }
@@ -52,12 +52,12 @@ function takePicture() {
 }
 
 // Upload puicture to the API
-function uploadPicture(file) {
+async function uploadPicture(file) {
     let formData = new FormData();
     formData.append("file", file);
     
     return fetch("/api/uploadpicture", {
         method: "POST",
         body: formData
-    }).then(response => response.text) 
+    }).then(response => response.text()) 
 }
