@@ -7,28 +7,51 @@
     <title>Document Scanner</title>
 </head>
 <body class="bg-secondary">
-    <header class="text-center mb-4 bg-dark text-white">
+    <header class="text-center mb-4 bg-dark text-white py-3">
         <h1>SSS3000</h1>
         <h2>Document Scanner</h2>
     </header>
+        <article class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                            <h5 class="modal-title">Scanned document</h5>
+                            <button id="closeModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="modal-text"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="closeModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </article>
     <main class="row">
         <section class="col-6 d-flex flex-column">
             <!-- Upload image -->
             <h3 class="text-center">UPLOAD PICTURE</h3>
-            <div id="dropzone" class="dropzone mx-auto" ondrop="handleDrop(event)" ondragover="handleDragOver(event)">
-                <p class="align-items-center">Drag and drop an image here</p>
+            <div id="dropzone" 
+                class="dropzone mx-auto" 
+                ondrop="handleDrop(event)" 
+                ondragover="handleDragOver(event)"
+                onclick="clickUpload(event)"
+            >
+                <p style="margin-top: calc(50% - 0.5rem);">Drag and drop an image here, or click here and choose an image</p>
             </div>
-            <input type="file" id="fileInput" style="display:none;">
-            <button id="upload-picture-button" class="btn btn-info mt-3 mx-auto" style="width: 25vmin;">Upload picture</button>
+            <input type="file" id="fileInput" style="display:none;" onchange="handleUpload(event)">
+            <button id="upload-picture-button" class="btn btn-primary mt-3 mx-auto" style="width: 25vmin;">Scan picture</button>
+            <button id="remove-picture-button" class="btn btn-danger mt-3 mx-auto" style="width: 25vmin;">Remove picture</button>
         </section>
 
         <section class="col-6 border-2 border-start border-dark line d-flex flex-column">
             <!-- Take picture -->
             <h3 class="text-center">TAKE PICTURE FROM PI</h3>
             <img id="pi-image" style="width: 60vmin; height: 60vmin;" class="mx-auto">
-            <button id="take-picture-button" class="btn btn-info mt-3 mx-auto" style="width: 25vmin;">Take picture</button>
+            <button id="take-picture-button" class="btn btn-primary mt-3 mx-auto" style="width: 25vmin;">Take and scan picture</button>
         </section>
     </main>
+    <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/main.js"></script>
 </body>
 </html>
