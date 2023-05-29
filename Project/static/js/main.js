@@ -73,22 +73,30 @@ function loadReader(event) {
 function setEventHandlers() {
     // Set the buttons
     document.getElementById("upload-picture-button")
-        .addEventListener('click',() => processImage());
+        .addEventListener('click',processImage);
     
     document.getElementById("take-picture-button")
-        .addEventListener('click', () => takePicture());
+        .addEventListener('click', takePicture);
 
     document.getElementById("remove-picture-button")
-        .addEventListener('click', () => { 
-            document.getElementById('dropzone').innerHTML = `
-                <p style="margin-top: calc(50% - 0.5rem);">
-                    Drag and drop an image here, or click here and choose an image
-                </p>`;
-            document.getElementById('fileInput').files = new DataTransfer().files;
-            file = null;
-        });
+        .addEventListener('click', removePicture);
+
+    document.getElementById("closeModal")
+        .addEventListener('click', removePicture);
+
+    document.getElementById("crossCloseModal")
+        .addEventListener('click', removePicture);
 }
 
+
+function removePicture() {
+    document.getElementById('dropzone').innerHTML = `
+        <p style="margin-top: calc(50% - 0.5rem);">
+            Drag and drop an image here, or click here and choose an image
+        </p>`;
+    document.getElementById('fileInput').files = new DataTransfer().files;
+    file = null;
+}
 
 // Replace \n character with br tag to render in html
 function replaceNewLines(text) {
