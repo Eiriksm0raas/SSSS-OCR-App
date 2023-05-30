@@ -47,5 +47,39 @@ class OCRConverter:
         text = pytesseract.image_to_string(image, lang="eng", config=config)
         return text
 
+    def rotate_image(self, image):
+        # Double transpose works best
+        transposed_image = cv2.transpose(image)
+        transposed_image = cv2.transpose(transposed_image)
+        rotated_image = cv2.flip(transposed_image, 1)
+        return cv2.transpose(rotated_image)
+
+    def detect_and_correct_rotation(self, image):
+
+        image = self.rotate_image(image)
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+        # Adaptive thresholding
+        binary = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 15, 2)
+        binary = cv2.bitwise_not(binary)
+        coords = np.column_stack(np.where(binary > 0))
+        angle = cv2.minAreaRect(coords)[-1]
+
+        # Correct the angle
+        if angle < -45:
+            angle = -(90 + angle)
+        else:
+            angle = -angle
+
+        # Compute new width and height
+        h, w = image.shape[:2]
+        new_w = int(abs(h * np.sin(np.radians(angle))) + abs(w * np.cos(np.radians(angle))))
+        new_h = int(abs(h * np.cos(np.radians(angle))) + abs(w * np.sin(np.radians(angle))))
+        M = cv2.getRotationMatrix2D((new_w / 2, new_h / 2), angle, 1.0)
+        rotated = cv2.warpAffine(image, M, (new_w, new_h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
+
+        return rotated
+
+
 
 
