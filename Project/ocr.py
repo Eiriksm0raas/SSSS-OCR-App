@@ -4,7 +4,7 @@ import pytesseract
 import urllib.request
 import numpy as np
 import time
-pytesseract.pytesseract.tesseract_cmd = r'C:\Users\halvo\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
+#pytesseract.pytesseract.tesseract_cmd = r'C:\Users\halvo\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
 
 
 class OCRConverter:
@@ -22,9 +22,8 @@ class OCRConverter:
     def preprocess_image(self, image):
         # Crop the image by specifying the desired dimensions
         # cropped_image = image[50:450, 100:500]
-        cropped_image = image
 
-        gray = cv2.cvtColor(cropped_image, cv2.COLOR_BGR2GRAY)
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         blur = cv2.GaussianBlur(gray, (5, 5), 0)
         thresh = cv2.adaptiveThreshold(blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
         return thresh 

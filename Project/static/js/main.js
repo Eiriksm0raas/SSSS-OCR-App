@@ -101,13 +101,16 @@ function removePicture() {
 // Replace \n character with br tag to render in html
 function replaceNewLines(text) {
     text = text.replace(/"/g, "");
+    text = text.replace(/\\f/g, "");
     return text.replace(/\\n/g, "<br>");
 }
 
 // Take picture from the Raspberry Pi
 function takePicture() {
-    return fetch("/api/takepicture")
-        .then(response => response.text());
+    fetch("/api/takepicture")
+        .then(response => response.text())
+        .then(text => replaceNewLines(text))
+        .then(text => displayInModal(text));
 }
 
 // Upload picture to the API
