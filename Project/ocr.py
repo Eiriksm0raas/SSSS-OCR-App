@@ -56,6 +56,7 @@ class OCRConverter:
         return cv2.transpose(rotated_image)
 
     def detect_and_correct_rotation(self, image):
+        # Create array from pillow image
         image = np.asarray(image)
 
         image = self.rotate_image(image)
@@ -80,6 +81,7 @@ class OCRConverter:
         M = cv2.getRotationMatrix2D((new_w / 2, new_h / 2), angle, 1.0)
         rotated = cv2.warpAffine(image, M, (new_w, new_h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
 
+        # Return to Pillow format
         return Image.fromarray(rotated)
 
 
