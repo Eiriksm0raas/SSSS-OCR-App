@@ -66,11 +66,8 @@ def feed():
 async def uploadpicture(file: UploadFile = File(...)):
     content = await file.read()
     image = Image.open(io.BytesIO(content))
-    rotated_image = converter.detect_and_correct_rotation(
-        np.asarray(image)
-    )
-
-    text = converter.ocr(Image.fromarray(rotated_image))
+    #image = converter.detect_and_correct_rotation(image)
+    text = converter.ocr(image)
     return text
 
 if __name__ == "__main__":

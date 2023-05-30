@@ -4,6 +4,7 @@ import pytesseract
 import urllib.request
 import numpy as np
 import time
+from PIL import Image
 #pytesseract.pytesseract.tesseract_cmd = r'C:\Users\halvo\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
 
 
@@ -55,6 +56,7 @@ class OCRConverter:
         return cv2.transpose(rotated_image)
 
     def detect_and_correct_rotation(self, image):
+        image = np.asarray(image)
 
         image = self.rotate_image(image)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -78,7 +80,7 @@ class OCRConverter:
         M = cv2.getRotationMatrix2D((new_w / 2, new_h / 2), angle, 1.0)
         rotated = cv2.warpAffine(image, M, (new_w, new_h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
 
-        return rotated
+        return Image.fromarray(rotated)
 
 
 
