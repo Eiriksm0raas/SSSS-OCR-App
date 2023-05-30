@@ -1,17 +1,22 @@
 from fastapi import FastAPI, Request, UploadFile, File, Response
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, FileResponse
 from PIL import Image
 import io
 from ocr import OCRConverter
-from camera_pi import Camera
 import cv2
 import numpy as np
 from PIL import Image
 
-camera = Camera()
-camera.initialize()
+camera_is_active = False
+try:
+    from camera_pi import Camera
+    camera = Camera()
+    camera.initialize()
+    camera_is_active = True
+except:
+    print("Could not connect to raspberry. Camera will be unavailable")
 
 app = FastAPI()
 
@@ -27,9 +32,11 @@ def root(request: Request):
 
 @app.get('/api/takepicture')
 def takepicture():
-
-    img = captureImage()
-    return converter.ocr(img)
+    if camera_is_active:
+        img = captureImage()
+        return converter.ocr(img)
+    else:
+        return "Camera is unavailable"
     
     
 def gen(camera):
@@ -47,7 +54,13 @@ def captureImage():
 
 @app.get('/api/feed')
 def feed():
-    return StreamingResponse(gen(camera), media_type="multipart/x-mixed-replace;boundary=frame")
+    if camera_is_active:
+        return StreamingResponse(
+            gen(camera), 
+            media_type="multipart/x-mixed-replace;boundary=frame"
+        )
+    else:
+        return FileResponse("static/images/no_image.jpg")
 
 @app.post('/api/uploadpicture')
 async def uploadpicture(file: UploadFile = File(...)):
