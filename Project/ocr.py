@@ -48,18 +48,15 @@ class OCRConverter:
         text = pytesseract.image_to_string(image, lang="eng", config=config)
         return text
 
-    def rotate_image(self, image):
-        # Double transpose works best
-        transposed_image = cv2.transpose(image)
-        transposed_image = cv2.transpose(transposed_image)
-        rotated_image = cv2.flip(transposed_image, 1)
+    def flip_and_transpose(self, image):
+        rotated_image = cv2.flip(image, 1)
         return cv2.transpose(rotated_image)
 
     def detect_and_correct_rotation(self, image):
         # Create array from pillow image
         image = np.asarray(image)
 
-        image = self.rotate_image(image)
+        image = self.flip_and_transpose(image)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
         # Adaptive thresholding

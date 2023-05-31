@@ -1,22 +1,9 @@
-# SSSS-OCR-App
-api, website and OCR for the course Sustainability through smart systems
+# SSS-OCR-App
+api, website and OCR for the course Sustainability through smart systems.  
+A course focusing on IoT and WoT.  
+The application is meant to be run on a Raspberry Pi.
 
-# Start instructions
-
-### Pip packages
-- pip install tensorflow --user
-- pip install keras-ocr --user
-- pip install "fastapi[all]"
-
-### Server
-In once console do:
-- cd server
-- uvicorn main:app --reload
-> --reload is just for auto refresh
-
-### Client
-In another console do:
-- cd client
-- npm install
-> npm install only first time
-- npm run dev
+## Running the project
+Along with installing packages, Tesseract has to be installed on the computer.  
+To run the application with uvicorn you can either move into the project directroy
+and run the command `uvicorn main:app`, or run the main.py file
